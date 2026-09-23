@@ -1,0 +1,419 @@
+* {
+  box-sizing: border-box;
+}
+
+.dashboard {
+  width: 100%;
+  max-width: 700px;
+  min-height: 100vh;
+  margin: 0 auto;
+  padding: 24px 16px 40px;
+  background: #00529b;
+}
+
+.dashboard-header {
+  margin-bottom: 24px;
+}
+
+.dashboard-header h1 {
+  margin: 0;
+  color: white;
+  font-size: 28px;
+  font-weight: 700;
+}
+
+.status {
+  text-align: center;
+  color: white;
+  margin-top: 40px;
+}
+
+.error {
+  color: #ffd54f;
+}
+
+.event-list {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.event-card {
+  display: flex;
+  width: 100%;
+  min-width: 0;
+  gap: 14px;
+  padding: 16px;
+  background: white;
+  border-radius: 12px;
+  border-left: 5px solid #ffd000;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.15);
+  overflow: hidden;
+}
+
+.event-date {
+  width: 50px;
+  min-width: 50px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.event-day {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: #666;
+}
+
+.event-date-number {
+  font-size: 28px;
+  font-weight: 800;
+  line-height: 1.1;
+  color: #00529b;
+}
+
+.event-month {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: #e5b800;
+}
+
+.event-content {
+  flex: 1;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.event-content h2 {
+  margin: 0 0 7px;
+  color: #17212b;
+  font-size: 16px;
+  line-height: 1.3;
+}
+
+.event-time {
+  margin: 0 0 5px;
+  color: #444;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.event-location {
+  margin: 0 0 14px;
+  color: #666;
+  font-size: 14px;
+}
+
+.attendance {
+  display: flex;
+  gap: 6px;
+}
+
+.attendance button {
+  flex: 1;
+  min-width: 0;
+  padding: 9px 5px;
+  border: 1px solid #ccd4dc;
+  border-radius: 6px;
+  background: white;
+  color: #333;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.attendance button.selected {
+  color: white;
+}
+
+.attendance button.attending-button.selected {
+  background: #2e7d32;
+  border-color: #2e7d32;
+}
+
+.attendance button.maybe-button.selected {
+  background: #f9a825;
+  border-color: #f9a825;
+}
+
+.attendance button.no-button.selected {
+  background: #d32f2f;
+  border-color: #d32f2f;
+}
+
+.attendance button:disabled {
+  cursor: default;
+  opacity: 1;
+}
+
+.attending-count {
+  margin: 0 0 12px;
+  color: #555;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.event-card {
+  cursor: pointer;
+}
+
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  padding: 20px;
+
+  background: rgba(0, 0, 0, 0.55);
+}
+
+.event-modal {
+  position: relative;
+
+  width: 100%;
+  max-width: 500px;
+  max-height: 80vh;
+
+  padding: 24px;
+
+  background: white;
+  border-radius: 14px;
+
+  overflow-y: auto;
+
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.25);
+}
+
+.loading-modal {
+  text-align: center;
+}
+
+.close-button {
+  position: absolute;
+  top: 10px;
+  right: 14px;
+
+  border: none;
+  background: none;
+
+  font-size: 30px;
+  line-height: 1;
+
+  color: #555;
+  cursor: pointer;
+}
+
+.event-modal h2 {
+  margin: 0 40px 8px 0;
+  color: #17212b;
+  font-size: 19px;
+}
+
+.modal-time,
+.modal-location {
+  margin: 5px 0;
+  color: #555;
+  font-size: 14px;
+}
+
+.attendance-group {
+  margin-top: 20px;
+}
+
+.attendance-group h3 {
+  margin: 0 0 8px;
+  font-size: 15px;
+  color: #00529b;
+}
+
+.attendance-group p {
+  margin: 4px 0;
+  color: #333;
+  font-size: 14px;
+}
+
+.dashboard-header {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 24px;
+}
+
+.add-event-button {
+  width: 46px;
+  height: 46px;
+  border: none;
+  border-radius: 50%;
+  background: #2e7d32;
+  color: white;
+  font-size: 30px;
+  font-weight: 400;
+  line-height: 1;
+  cursor: pointer;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
+}
+
+.add-event-button:hover {
+  background: #256628;
+}
+
+.create-event-modal form {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.create-event-modal label {
+  margin-top: 8px;
+  color: #333;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.create-event-modal input,
+.create-event-modal select {
+  width: 100%;
+  padding: 11px 12px;
+  border: 1px solid #ccd4dc;
+  border-radius: 7px;
+  background: white;
+  color: #222;
+  font-family: inherit;
+  font-size: 14px;
+}
+
+.create-event-modal input:focus,
+.create-event-modal select:focus {
+  outline: none;
+  border-color: #00529b;
+}
+
+.create-event-submit {
+  margin-top: 18px;
+  padding: 12px;
+  border: none;
+  border-radius: 7px;
+  background: #00529b;
+  color: white;
+  font-family: inherit;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.create-event-submit:disabled {
+  opacity: 0.6;
+  cursor: default;
+}
+
+.event-card {
+  position: relative;
+}
+
+.event-menu-button {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+
+  width: 32px;
+  height: 32px;
+
+  border: none;
+  background: transparent;
+
+  color: #555;
+  font-size: 24px;
+  line-height: 1;
+
+  cursor: pointer;
+  z-index: 2;
+}
+
+.event-menu-button:hover {
+  color: #00529b;
+}
+
+.event-menu {
+  position: absolute;
+  top: 42px;
+  right: 8px;
+
+  z-index: 10;
+
+  min-width: 130px;
+
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.2);
+
+  overflow: hidden;
+}
+
+.event-menu button {
+  display: block;
+
+  width: 100%;
+  padding: 11px 14px;
+
+  border: none;
+  background: white;
+
+  color: #333;
+  font-family: inherit;
+  font-size: 14px;
+  text-align: left;
+
+  cursor: pointer;
+}
+
+.event-menu button:hover {
+  background: #f2f4f6;
+}
+
+.event-menu .delete-menu-item {
+  color: #d32f2f;
+}
+
+.delete-event-description {
+  margin: 15px 0 20px;
+  color: #444;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.delete-event-submit {
+  width: 100%;
+  margin-top: 18px;
+  padding: 12px;
+
+  border: none;
+  border-radius: 7px;
+
+  background: #d32f2f;
+  color: white;
+
+  font-family: inherit;
+  font-size: 15px;
+  font-weight: 700;
+
+  cursor: pointer;
+}
+
+.delete-event-submit:hover {
+  background: #b71c1c;
+}
+
+.delete-event-submit:disabled {
+  opacity: 0.6;
+  cursor: default;
+}

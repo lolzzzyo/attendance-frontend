@@ -1,0 +1,498 @@
+<div class="dashboard">
+
+  <header class="dashboard-header">
+    <h1>Upcoming events</h1>
+
+     @if (isAdmin) {
+    <button
+      type="button"
+      class="add-event-button"
+      (click)="openCreateEventModal()">
+      +
+    </button>
+  }
+  </header>
+
+  @if (loading) {
+    <p class="status">Loading events...</p>
+  }
+
+  @if (errorMessage) {
+    <p class="status error">{{ errorMessage }}</p>
+  }
+
+  @if (!loading && !errorMessage) {
+
+    @if (events.length === 0) {
+      <p class="status">No upcoming events.</p>
+    }
+
+    <div class="event-list">
+
+      @for (event of events; track event.id) {
+
+        <article class="event-card" (click)="openEvent(event)">
+
+          @if (isAdmin){
+           <button
+    type="button"
+    class="event-menu-button"
+    (click)="toggleEventMenu(event.id, $event)">
+    ⋮
+  </button>
+
+  @if (showEventMenuId === event.id) {
+    <div
+      class="event-menu"
+      (click)="$event.stopPropagation()">
+
+      <button
+        type="button"
+        (click)="openEditEvent(event, $event)">
+        Edit
+      </button>
+
+      <button
+        type="button"
+        class="delete-menu-item"
+        (click)="openArchiveEvent(event, $event)">
+        Delete
+      </button>
+
+    </div>
+  }
+          }
+
+          <div class="event-date">
+            <span class="event-day">
+              {{ event.startDateTime | date:'EEE' }}
+            </span>
+
+            <span class="event-date-number">
+              {{ event.startDateTime | date:'d' }}
+            </span>
+
+            <span class="event-month">
+              {{ event.startDateTime | date:'MMM' }}
+            </span>
+          </div>
+
+          <div class="event-content">
+
+            <h2>{{ event.description }}</h2>
+
+            <p class="event-time">
+              {{ event.startDateTime | date:'HH:mm' }}
+              –
+              {{ event.endDateTime | date:'HH:mm' }}
+            </p>
+
+            <a
+            class="event-location"
+            [href]="getMapUrl(event.location)"
+            target="_blank"
+            rel="noopener noreferrer"
+            (click)="$event.stopPropagation()">
+            📍 {{ event.location }}
+            </a>
+
+            <p class="attending-count">
+  👥 {{ event.attendingCount }} attending
+</p>
+
+@if (!isAdmin) {
+           <div class="attendance">
+
+            <button
+              type="button"
+              class="attending-button"
+              [class.selected]="event.myAttendance === 'ATTENDING'"
+              [disabled]="event.myAttendance === 'ATTENDING'"
+              (click)="setAttendance(event, 'ATTENDING'); $event.stopPropagation()">
+              Attending
+            </button>
+
+            <button
+              type="button"
+              class="maybe-button"
+              [class.selected]="event.myAttendance === 'MAYBE'"
+              [disabled]="event.myAttendance === 'MAYBE'"
+              (click)="setAttendance(event, 'MAYBE'); $event.stopPropagation()">
+              Maybe
+            </button>
+
+            <button
+              type="button"
+              class="no-button"
+              [class.selected]="event.myAttendance === 'NOT_ATTENDING'"
+              [disabled]="event.myAttendance === 'NOT_ATTENDING'"
+              (click)="setAttendance(event, 'NOT_ATTENDING'); $event.stopPropagation()">
+              No
+            </button>
+
+          </div>
+        }
+
+          </div>
+
+        </article>
+
+      }
+
+    </div>
+
+  }
+
+@if (selectedEvent) {
+  <div
+    class="modal-backdrop"
+    (click)="closeEvent()">
+
+    <div
+      class="event-modal"
+      (click)="$event.stopPropagation()">
+
+      <button
+        type="button"
+        class="close-button"
+        (click)="closeEvent()">
+        ×
+      </button>
+
+      <h2>{{ selectedEvent.description }}</h2>
+
+      <p class="modal-time">
+        {{ selectedEvent.startDateTime | date:'EEE d MMM, HH:mm' }}
+        –
+        {{ selectedEvent.endDateTime | date:'HH:mm' }}
+      </p>
+
+      <p class="modal-location">
+        📍 {{ selectedEvent.location }}
+      </p>
+
+      @if (getUsersByAttendance('ATTENDING').length > 0) {
+        <div class="attendance-group attending-group">
+          <h3>Attending</h3>
+
+          @for (user of getUsersByAttendance('ATTENDING'); track user.accountId) {
+            <p>{{ user.nickName }} {{ user.firstName }}</p>
+          }
+        </div>
+      }
+
+      @if (getUsersByAttendance('MAYBE').length > 0) {
+        <div class="attendance-group maybe-group">
+          <h3>Maybe</h3>
+
+          @for (user of getUsersByAttendance('MAYBE'); track user.accountId) {
+            <p>{{ user.nickName }} {{ user.firstName }}</p>
+          }
+        </div>
+      }
+
+      @if (getUsersByAttendance('NOT_ATTENDING').length > 0) {
+        <div class="attendance-group not-attending-group">
+          <h3>Not going</h3>
+
+          @for (user of getUsersByAttendance('NOT_ATTENDING'); track user.accountId) {
+            <p>{{ user.nickName }} {{ user.firstName }}</p>
+          }
+        </div>
+      }
+
+      @if (getUsersWithoutAttendance().length > 0) {
+        <div class="attendance-group no-response-group">
+          <h3>No response</h3>
+
+          @for (user of getUsersWithoutAttendance(); track user.accountId) {
+            <p>{{ user.nickName }} {{ user.firstName }}</p>
+          }
+        </div>
+      }
+
+    </div>
+  </div>
+}
+
+@if (showCreateEventModal) {
+  <div
+    class="modal-backdrop"
+    (click)="closeCreateEventModal()">
+
+    <div
+      class="event-modal create-event-modal"
+      (click)="$event.stopPropagation()">
+
+      <button
+        type="button"
+        class="close-button"
+        (click)="closeCreateEventModal()">
+        ×
+      </button>
+
+      <h2>Add Event</h2>
+
+      <form (ngSubmit)="createEvent()">
+
+        <label for="description">
+          Description
+        </label>
+
+        <input
+          id="description"
+          name="description"
+          type="text"
+          [(ngModel)]="newEvent.description"
+          placeholder="Wekelijkse training"
+          required
+        />
+
+        <label for="startDateTime">
+          Start
+        </label>
+
+        <input
+          id="startDateTime"
+          name="startDateTime"
+          type="datetime-local"
+          [(ngModel)]="newEvent.startDateTime"
+          required
+        />
+
+        <label for="endDateTime">
+          End
+        </label>
+
+        <input
+          id="endDateTime"
+          name="endDateTime"
+          type="datetime-local"
+          [(ngModel)]="newEvent.endDateTime"
+          required
+        />
+
+        <label for="location">
+          Location
+        </label>
+
+        <input
+          id="location"
+          name="location"
+          type="text"
+          [(ngModel)]="newEvent.location"
+          placeholder="Sporthal X"
+          required
+        />
+
+       <label for="recurrence">Recurrence</label>
+      <select
+        id="recurrence"
+        name="recurrence"
+        [(ngModel)]="newEvent.recurrence">
+
+        <option value="NONE">None</option>
+        <option value="DAILY">Daily</option>
+        <option value="WEEKLY">Weekly</option>
+        <option value="MONTHLY">Monthly</option>
+        <option value="YEARLY">Yearly</option>
+
+      </select>
+        @if (newEvent.recurrence !== 'NONE') {
+          <label for="repeatUntil">
+            Repeat until
+          </label>
+
+          <input
+            id="repeatUntil"
+            name="repeatUntil"
+            type="datetime-local"
+            [(ngModel)]="newEvent.repeatUntil"
+            required
+          />
+        }
+
+        <button
+          type="submit"
+          class="create-event-submit"
+          [disabled]="creatingEvent">
+
+          {{ creatingEvent ? 'Creating...' : 'Create Event' }}
+
+        </button>
+
+      </form>
+
+    </div>
+  </div>
+}
+
+@if (showEditEventModal && editingEvent) {
+  <div
+    class="modal-backdrop"
+    (click)="closeEditEvent()">
+
+    <div
+      class="event-modal create-event-modal"
+      (click)="$event.stopPropagation()">
+
+      <button
+        type="button"
+        class="close-button"
+        (click)="closeEditEvent()">
+        ×
+      </button>
+
+      <h2>Edit Event</h2>
+
+      <form (ngSubmit)="updateEvent()">
+
+        <label for="edit-description">
+          Description
+        </label>
+
+        <input
+          id="edit-description"
+          name="edit-description"
+          type="text"
+          [(ngModel)]="editingEvent.description"
+          required
+        />
+
+        <label for="edit-start">
+          Start
+        </label>
+
+        <input
+          id="edit-start"
+          name="edit-start"
+          type="datetime-local"
+          [(ngModel)]="editingEvent.startDateTime"
+          required
+        />
+
+        <label for="edit-end">
+          End
+        </label>
+
+        <input
+          id="edit-end"
+          name="edit-end"
+          type="datetime-local"
+          [(ngModel)]="editingEvent.endDateTime"
+          required
+        />
+
+        <label for="edit-location">
+          Location
+        </label>
+
+        <input
+          id="edit-location"
+          name="edit-location"
+          type="text"
+          [(ngModel)]="editingEvent.location"
+          required
+        />
+
+        <label for="edit-scope">
+          Update
+        </label>
+
+        <select
+          id="edit-scope"
+          name="edit-scope"
+          [(ngModel)]="editingEventUpdateScope">
+
+          <option value="THIS_EVENT">
+            This event
+          </option>
+
+          <option value="THIS_AND_FUTURE">
+            This and future
+          </option>
+
+          @if (editingEvent.recurrenceGroupId) {
+            <option value="ENTIRE_RECURRENCE">
+              Entire recurrence
+            </option>
+          }
+
+        </select>
+
+        <button
+          type="submit"
+          class="create-event-submit"
+          [disabled]="updatingEvent">
+
+          {{ updatingEvent ? 'Saving...' : 'Save changes' }}
+
+        </button>
+
+      </form>
+    </div>
+  </div>
+}
+
+@if (showArchiveModal && archivingEvent) {
+  <div
+    class="modal-backdrop"
+    (click)="closeArchiveEvent()">
+
+    <div
+      class="event-modal create-event-modal"
+      (click)="$event.stopPropagation()">
+
+      <button
+        type="button"
+        class="close-button"
+        (click)="closeArchiveEvent()">
+        ×
+      </button>
+
+      <h2>Delete Event</h2>
+
+      <p class="delete-event-description">
+        Are you sure you want to delete
+        <strong>{{ archivingEvent.description }}</strong>?
+      </p>
+
+      <label for="archive-scope">
+        Delete
+      </label>
+
+      <select
+        id="archive-scope"
+        name="archive-scope"
+        [(ngModel)]="archivingEventScope">
+
+        <option value="THIS_EVENT">
+          This event
+        </option>
+
+        <option value="THIS_AND_FUTURE">
+          This and future
+        </option>
+
+        @if (archivingEvent.recurrenceGroupId) {
+          <option value="ENTIRE_RECURRENCE">
+            Entire recurrence
+          </option>
+        }
+
+      </select>
+
+      <button
+        type="button"
+        class="delete-event-submit"
+        [disabled]="archivingEventInProgress"
+        (click)="archiveEvent()">
+
+        {{ archivingEventInProgress ? 'Deleting...' : 'Delete Event' }}
+
+      </button>
+
+    </div>
+  </div>
+}
+</div>

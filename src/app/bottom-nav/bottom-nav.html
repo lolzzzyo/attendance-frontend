@@ -1,0 +1,33 @@
+<nav class="bottom-nav">
+
+
+    <a
+    routerLink="/dashboard"
+    routerLinkActive="active"
+    [routerLinkActiveOptions]="{ exact: true }">
+        <span class="nav-icon">📅</span>
+        <span class="nav-label">Upcoming</span>
+    </a>
+
+    <a routerLink="/past">
+        <span class="nav-icon">🕘</span>
+        <span class="nav-label">Past</span>
+    </a>
+
+   @if (isAdmin) {
+  <a routerLink="/import" routerLinkActive="active">
+    <span class="nav-icon">↑</span>
+    <span class="nav-label">Import</span>
+  </a>
+}
+    <a routerLink="/account" routerLinkActive="active">
+        <span class="nav-icon">👤</span>
+        <span class="nav-label">Account</span>
+    </a>
+
+    <button type="button" class="nav-button" (click)="logout()">
+        <span class="nav-icon">↪</span>
+        <span class="nav-label">Logout</span>
+    </button>
+
+</nav>

@@ -1,0 +1,73 @@
+<div class="account-page">
+
+  <h1>Account</h1>
+
+  @if (loading) {
+    <p class="status">Loading...</p>
+  }
+
+  @if (!loading && account) {
+
+    <form class="account-form" (ngSubmit)="save()">
+
+      <label for="email">Email</label>
+      <input
+        id="email"
+        type="email"
+        [value]="account.email"
+        disabled
+      />
+
+      <label for="firstName">First name</label>
+      <input
+        id="firstName"
+        name="firstName"
+        type="text"
+        [(ngModel)]="firstName"
+        required
+      />
+
+      <label for="nickname">Nickname</label>
+      <input
+        id="nickname"
+        name="nickname"
+        type="text"
+        [(ngModel)]="nickname"
+      />
+
+      <label for="lastName">Last name</label>
+      <input
+        id="lastName"
+        name="lastName"
+        type="text"
+        [(ngModel)]="lastName"
+        required
+      />
+
+      <label for="password">New password</label>
+      <input
+        id="password"
+        name="password"
+        type="password"
+        [(ngModel)]="password"
+        placeholder="Leave empty to keep current password"
+      />
+
+      @if (successMessage) {
+        <p class="success">{{ successMessage }}</p>
+      }
+
+      @if (errorMessage) {
+        <p class="error">{{ errorMessage }}</p>
+      }
+
+      <button
+        type="submit"
+        [disabled]="saving">
+        {{ saving ? 'Saving...' : 'Save changes' }}
+      </button>
+
+    </form>
+  }
+
+</div>

@@ -1,0 +1,121 @@
+* {
+  box-sizing: border-box;
+}
+
+.account-page {
+  width: 100%;
+  max-width: 700px;
+  min-height: 100vh;
+  margin: 0 auto;
+  padding: 24px 16px 100px;
+  background: #00529b;
+}
+
+.account-page h1 {
+  margin: 0 0 24px;
+  color: white;
+  font-size: 28px;
+  font-weight: 700;
+}
+
+.account-form {
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+
+  padding: 20px;
+
+  background: white;
+  border-radius: 12px;
+
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.15);
+}
+
+.account-form label {
+  margin-top: 8px;
+  color: #333;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.account-form input {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+
+  padding: 11px 12px;
+
+  border: 1px solid #ccd4dc;
+  border-radius: 7px;
+
+  background: white;
+  color: #222;
+
+  font-family: inherit;
+  font-size: 14px;
+}
+
+.account-form input:focus {
+  outline: none;
+  border-color: #00529b;
+}
+
+.account-form input:disabled {
+  background: #f0f2f4;
+  color: #777;
+  cursor: default;
+}
+
+.account-form button {
+  width: 100%;
+  max-width: 100%;
+
+  margin-top: 18px;
+  padding: 12px;
+
+  border: none;
+  border-radius: 7px;
+
+  background: #00529b;
+  color: white;
+
+  font-family: inherit;
+  font-size: 15px;
+  font-weight: 700;
+
+  cursor: pointer;
+}
+
+.account-form button:hover {
+  background: #003f78;
+}
+
+.account-form button:disabled {
+  opacity: 0.6;
+  cursor: default;
+}
+
+.status {
+  text-align: center;
+  color: white;
+  margin-top: 40px;
+}
+
+.success {
+  margin: 12px 0 0;
+  color: #2e7d32;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.error {
+  margin: 12px 0 0;
+  color: #d32f2f;
+  font-size: 14px;
+  font-weight: 600;
+}

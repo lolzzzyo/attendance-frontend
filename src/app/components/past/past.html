@@ -1,0 +1,123 @@
+<div class="past-page">
+
+  <h1>Past events</h1>
+
+  @if (loading) {
+    <p class="status">Loading...</p>
+  }
+
+  @if (errorMessage) {
+    <p class="error">{{ errorMessage }}</p>
+  }
+
+  @if (!loading && !errorMessage && events.length === 0) {
+    <p class="status">No past events.</p>
+  }
+
+  @if (!loading && events.length > 0) {
+    <div class="event-list">
+
+      @for (event of events; track event.id) {
+        <article
+  class="event-card"
+  (click)="openEvent(event)">
+
+          <div class="event-date">
+            {{ event.startDateTime | date:'EEE, d MMM' }}
+          </div>
+
+          <div class="event-time">
+            {{ event.startDateTime | date:'HH:mm' }}
+            -
+            {{ event.endDateTime | date:'HH:mm' }}
+          </div>
+
+          <h2>{{ event.description }}</h2>
+
+          <p class="event-location">
+            {{ event.location }}
+          </p>
+
+          <p class="attendance-count">
+            {{ event.attendingCount }} attended
+          </p>
+
+        </article>
+      }
+
+    </div>
+  }
+
+
+  @if (selectedEvent) {
+  <div
+    class="modal-backdrop"
+    (click)="closeEvent()">
+
+    <div
+      class="event-modal"
+      (click)="$event.stopPropagation()">
+
+      <button
+        type="button"
+        class="close-button"
+        (click)="closeEvent()">
+        ×
+      </button>
+
+      <h2>{{ selectedEvent.description }}</h2>
+
+      <p class="modal-time">
+        {{ selectedEvent.startDateTime | date:'EEE d MMM, HH:mm' }}
+        –
+        {{ selectedEvent.endDateTime | date:'HH:mm' }}
+      </p>
+
+      <p class="modal-location">
+        📍 {{ selectedEvent.location }}
+      </p>
+
+      @if (getUsersByAttendance('ATTENDING').length > 0) {
+        <div class="attendance-group attending-group">
+          <h3>Attending</h3>
+
+          @for (user of getUsersByAttendance('ATTENDING'); track user.accountId) {
+            <p>{{ user.nickName }} {{ user.firstName }}</p>
+          }
+        </div>
+      }
+
+      @if (getUsersByAttendance('MAYBE').length > 0) {
+        <div class="attendance-group maybe-group">
+          <h3>Maybe</h3>
+
+          @for (user of getUsersByAttendance('MAYBE'); track user.accountId) {
+            <p>{{ user.nickName }} {{ user.firstName }}</p>
+          }
+        </div>
+      }
+
+      @if (getUsersByAttendance('NOT_ATTENDING').length > 0) {
+        <div class="attendance-group not-attending-group">
+          <h3>Not going</h3>
+
+          @for (user of getUsersByAttendance('NOT_ATTENDING'); track user.accountId) {
+            <p>{{ user.nickName }} {{ user.firstName }}</p>
+          }
+        </div>
+      }
+
+      @if (getUsersWithoutAttendance().length > 0) {
+        <div class="attendance-group no-response-group">
+          <h3>No response</h3>
+
+          @for (user of getUsersWithoutAttendance(); track user.accountId) {
+            <p>{{ user.nickName }} {{ user.firstName }}</p>
+          }
+        </div>
+      }
+
+    </div>
+  </div>
+}
+</div>

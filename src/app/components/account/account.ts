@@ -3,7 +3,7 @@ import { FormsModule } from '@angular/forms';
 import {
   AccountService,
   AccountData
-} from '../account';
+} from '../../services/account/account';
 
 @Component({
   selector: 'app-account',

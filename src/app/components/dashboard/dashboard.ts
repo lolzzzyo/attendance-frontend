@@ -7,8 +7,8 @@ import {
   EventOverview,
   EventDetail,
   EventAttendanceUser
-} from '../events';
-import { Auth } from '../auth'
+} from '../../services/event/events';
+import { Auth } from '../../services/auth/auth'
 
 @Component({
   selector: 'app-dashboard',

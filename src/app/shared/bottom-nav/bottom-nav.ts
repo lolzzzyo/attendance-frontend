@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { RouterLink, RouterLinkActive, Router } from '@angular/router';
-import { Auth } from '../auth';
+import { Auth } from '../../services/auth/auth';
 
 @Component({
   selector: 'app-bottom-nav',

@@ -1,7 +1,7 @@
 import { Component, ChangeDetectorRef } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
-import { Auth } from '../auth';
+import { Auth } from '../../services/auth/auth';
 
 @Component({
   selector: 'app-login',

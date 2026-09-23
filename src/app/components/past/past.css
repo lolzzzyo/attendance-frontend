@@ -1,0 +1,132 @@
+.past-page {
+  width: 100%;
+  max-width: 700px;
+  min-height: calc(100vh - 70px);
+  margin: 0 auto;
+  padding: 24px 16px 30px;
+  background: #00529b;
+}
+
+.past-page h1 {
+  margin: 0 0 20px;
+  color: white;
+}
+
+.event-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.event-card {
+  padding: 16px;
+  background: white;
+  border-left: 5px solid #f5c400;
+  border-radius: 10px;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.12);
+  cursor: pointer;
+}
+
+.event-date {
+  font-weight: 800;
+  font-size: 16px;
+}
+
+.event-time {
+  margin-top: 3px;
+  color: #555;
+  font-size: 14px;
+}
+
+.event-card h2 {
+  margin: 10px 0 6px;
+  font-size: 17px;
+  color: #222;
+}
+
+.event-location {
+  margin: 0;
+  color: #555;
+  font-size: 14px;
+}
+
+.attendance-count {
+  margin: 10px 0 0;
+  color: #00529b;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.status,
+.error {
+  color: white;
+}
+
+.event-modal {
+  position: relative;
+
+  width: 100%;
+  max-width: 500px;
+  max-height: 80vh;
+
+  padding: 24px;
+
+  background: white;
+  border-radius: 14px;
+
+  overflow-y: auto;
+
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.25);
+}
+
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  padding: 20px;
+
+  background: rgba(0, 0, 0, 0.55);
+}
+
+.close-button {
+  position: absolute;
+  top: 10px;
+  right: 14px;
+
+  border: none;
+  background: none;
+
+  font-size: 30px;
+  line-height: 1;
+
+  color: #555;
+  cursor: pointer;
+}
+
+.modal-time,
+.modal-location {
+  margin: 5px 0;
+  color: #555;
+  font-size: 14px;
+}
+
+.attendance-group {
+  margin-top: 20px;
+}
+
+.attendance-group h3 {
+  margin: 0 0 8px;
+  font-size: 15px;
+  color: #00529b;
+}
+
+.attendance-group p {
+  margin: 4px 0;
+  color: #333;
+  font-size: 14px;
+}

@@ -103,4 +103,10 @@ archiveEvent(
     { responseType: 'text' }
   );
 }
+
+getPastEvents(): Observable<EventOverview[]> {
+  return this.http.get<EventOverview[]>(
+    `${this.apiUrl}/past`
+  );
+}
 }

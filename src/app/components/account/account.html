@@ -18,6 +18,14 @@
         disabled
       />
 
+      <label for="nickname">Title</label>
+      <input
+        id="nickname"
+        name="nickname"
+        type="text"
+        [(ngModel)]="nickname"
+      />
+
       <label for="firstName">First name</label>
       <input
         id="firstName"
@@ -27,13 +35,7 @@
         required
       />
 
-      <label for="nickname">Nickname</label>
-      <input
-        id="nickname"
-        name="nickname"
-        type="text"
-        [(ngModel)]="nickname"
-      />
+    
 
       <label for="lastName">Last name</label>
       <input

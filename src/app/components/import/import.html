@@ -1,0 +1,89 @@
+<div class="import-page">
+
+  <h1>Import</h1>
+
+  <select
+    [(ngModel)]="selectedImport"
+    class="import-select">
+
+    <option value="accounts">Accounts</option>
+    <option value="events">Events</option>
+    <option value="stats">Statistics</option>
+
+  </select>
+
+
+  @if (selectedImport === 'accounts') {
+
+  <section class="import-card">
+
+    <h2>Import accounts</h2>
+    <p>Import user accounts from an Excel file. (.xlxs files only)</p>
+      <p>The headers should be from left to right: first name, last name, email</p>
+
+    <input
+      type="file"
+      accept=".xlsx"
+      #fileInput
+      hidden
+      (change)="onFileSelected($event)">
+
+    <button
+      type="button"
+      (click)="fileInput.click()">
+      Choose file
+    </button>
+
+    @if (selectedFile) {
+      <p class="selected-file">
+        Selected file: {{ selectedFile.name }}
+      </p>
+    }
+
+    <button
+      type="button"
+      [disabled]="!selectedFile"
+      (click)="importAccounts()">
+      Import
+    </button>
+
+    @if (importMessage) {
+      <p class="import-success">
+        ✓ {{ importMessage }}
+      </p>
+    }
+
+    @if (importError) {
+      <p class="import-error">
+        ✕ {{ importError }}
+      </p>
+    }
+
+  </section>
+
+}
+
+
+  @if (selectedImport === 'events') {
+    <section class="import-card">
+      <h2>Import events</h2>
+      <p>Import events from an Excel file. (.xlxs files only)</p>
+      <p>The headers should be from left to right: Datum, Tijd, Team thuis, Team uit, Locatie, Veld, Regio, Poule, Code, Zaalcode, Zaal, Plaats</p>
+
+      <!-- Existing event import UI will go here -->
+    </section>
+  }
+
+
+  @if (selectedImport === 'stats') {
+    <section class="import-card">
+      <h2>Import statistics</h2>
+      <p>Statistics import will be available later.</p>
+
+      <button type="button" disabled>
+        Import statistics
+      </button>
+    </section>
+  }
+
+</div>

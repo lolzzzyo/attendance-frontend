@@ -1,0 +1,78 @@
+.import-page {
+  width: 100%;
+  max-width: 700px;
+  min-height: calc(100vh - 70px);
+  margin: 0 auto;
+  padding: 24px 16px 30px;
+  background: #00529b;
+  box-sizing: border-box;
+}
+
+.import-page h1 {
+  margin: 0 0 20px;
+  color: white;
+}
+
+.import-select {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 16px;
+  border: none;
+  border-radius: 8px;
+  background: white;
+  font-size: 16px;
+}
+
+.import-card {
+  padding: 20px;
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.12);
+}
+
+.import-card h2 {
+  margin-top: 0;
+  color: #222;
+}
+
+.import-card p {
+  color: #555;
+}
+
+.import-card button {
+  padding: 10px 16px;
+  border: none;
+  border-radius: 6px;
+  background: #ccc;
+  color: #666;
+}
+
+.import-card {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.import-card button {
+  width: 100%;
+  padding: 12px;
+}
+
+.import-success {
+  margin: 0;
+  color: #198754;
+  font-weight: 600;
+}
+
+.import-error {
+  margin: 0;
+  color: #dc3545;
+  font-weight: 600;
+}
+
+.selected-file {
+  margin: 0;
+  color: #555;
+  font-size: 14px;
+  word-break: break-word;
+}

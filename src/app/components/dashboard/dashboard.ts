@@ -210,10 +210,7 @@ createEvent(): void {
     endDateTime: this.newEvent.endDateTime,
     location: this.newEvent.location,
     description: this.newEvent.description,
-    recurrence:
-      this.newEvent.recurrence === 'NONE'
-        ? null
-        : this.newEvent.recurrence,
+    recurrence: this.newEvent.recurrence,
     repeatUntil:
       this.newEvent.recurrence === 'NONE'
         ? null
